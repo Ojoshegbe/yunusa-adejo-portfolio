@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adejo Yunusa — Web Developer &amp; Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- EmailJS: sends the contact form straight to your Gmail without a backend. -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div id="preloader">
+  <div class="loader-mark">ADEJO.YUNUSA</div>
+  <div class="loader-bar"></div>
+</div>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">ADEJO<span>.</span>YUNUSA</div>
+    <nav>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </div>
+</header>
+
+<!-- Floating dock nav — shows only on small screens (see .mobile-dock CSS) -->
+<nav class="mobile-dock" aria-label="Mobile navigation">
+  <a href="#home" class="active" aria-label="Home"><i class="fa-solid fa-house"></i><span class="dock-label">Home</span></a>
+  <a href="#about" aria-label="About"><i class="fa-solid fa-user"></i><span class="dock-label">About</span></a>
+  <a href="#services" aria-label="Services"><i class="fa-solid fa-layer-group"></i><span class="dock-label">Services</span></a>
+  <a href="#portfolio" aria-label="Portfolio"><i class="fa-solid fa-briefcase"></i><span class="dock-label">Work</span></a>
+  <a href="#contact" aria-label="Contact"><i class="fa-solid fa-envelope"></i><span class="dock-label">Contact</span></a>
+  <button id="theme-toggle-mobile" aria-label="Toggle dark mode">🌙</button>
+</nav>
+
+<section class="hero" id="home">
+  <div class="glow"></div>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Web Developer &amp; Designer</span>
+      <h1>I design and build interfaces that are fast, responsive, and <em>easy to use.</em></h1>
+      <p class="lead">I'm Adejo Yunusa, a web developer and designer working across HTML, CSS, JavaScript, and React. I take projects from concept to a clean, responsive site — handling both the look and the code.</p>
+      <div class="btn-row">
+        <a href="#portfolio" class="btn btn-primary">View my work</a>
+        <a href="images/cv.me.png" class="btn btn-ghost" download="download">Download CV</a>
+      </div>
+    </div>
+    <div class="portrait reveal">
+      <img src="images/me3.jpg" alt="Adejo Yunusa">
+      <div class="tag"><span class="dot"></span> Open to freelance work</div>
+    </div>
+  </div>
+</section>
+
+<!-- ------srolling animation------------- -->
+ <section class="scroll">
+  <div class="scroll-cont">
+    <i class="fa-solid fa-code" id="one"></i>
+    <i class="fa-brands fa-sass" id="two"></i>
+    <i class="fa-brands fa-css" id="three"></i>
+    <i class="fa-brands fa-react" id="four"></i>
+    <i class="fa-brands fa-square-js" id="five"></i>
+    <i class="fa-brands fa-node" id="six"></i>
+    <i class="fa-brands fa-vuejs" id="seven"></i>
+    <i class="fa-brands fa-npm" id="eight"></i>
+    <i class="fa-brands fa-angular" id="nine"></i>
+    <i class="fa-brands fa-git-alt" id="ten"></i>
+    <i class="fa-brands fa-github" id="eleven"></i>
+    <i class="fa-solid fa-code-compare" id="twelve"></i>
+    <i class="fa-brands fa-git" id="thirteen"></i>
+    <i class="fa-brands fa-visual-studio" id="fourteen"></i>
+    <i class="fa-brands fa-dev" id="fifteen"></i>
+    <i class="fa-solid fa-reply" id="sixteen"></i>
+  </div>
+ </section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">About</span>
+      <h2>A bit about how I work</h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I'm a web developer and designer with a focus on clean visual design and smooth user experience. I work primarily with HTML, CSS, JavaScript, and React, and I'm comfortable with Git for version control and REST APIs for connecting interfaces to real data.</p>
+        <p>I care about the details that make a site feel considered — consistent spacing, sensible interactions, and layouts that hold up on any screen size. I'm also continuously learning, staying close to how the web landscape evolves so the sites I build don't feel dated in a year.</p>
+        <div class="skill-grid">
+          <div class="skill-chip"> <i class="fa-solid fa-code"></i> HTML</div>
+          <div class="skill-chip"> <i class="fa-brands fa-css"></i> CSS</div>
+          <div class="skill-chip"> <i class="fa-brands fa-square-js"></i> JavaScript</div>
+          <div class="skill-chip"> <i class="fa-brands fa-react"></i> React</div>
+          <div class="skill-chip"> <i class="fa-brands fa-git-alt"></i>Git</div>
+          <div class="skill-chip"> REST APIs</div>
+          <div class="skill-chip"><i class="fa-brands fa-node"></i>Node.js</div>
+          <div class="skill-chip"><i class="fa-brands fa-npm"></i> npm</div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="info-row">
+          <div class="k">EXPERIENCE</div>
+          <div class="v"><div class="role">Web Developer Intern — Zealarex technology</div><div class="meta">2023</div></div>
+        </div>
+        <div class="info-row">
+          <div class="k"></div>
+          <div class="v"><div class="role">Freelance Developer &amp; Designer — Fiverr, Upwork &amp; others</div><div class="meta">2023 — Present</div></div>
+        </div>
+        <div class="info-row">
+          <div class="k">EDUCATION</div>
+          <div class="v"><div class="role">Frontend Development Training — Zealarex technology</div><div class="meta">2022</div></div>
+        </div>
+        <div class="info-row">
+          <div class="k"></div>
+          <div class="v"><div class="role">Ikorodu High School</div><div class="meta">2022</div></div>
+        </div>
+        <div class="info-row">
+          <div class="k">SOFT SKILL</div>
+          <div class="v"><div class="role">Clear communication</div><div class="meta">Comfortable working directly with clients on scope and feedback</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="alt" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Services</span>
+      <h2>What I can help with</h2>
+    </div>
+    <div class="service-grid">
+      <div class="service-card reveal">
+        <span class="num">01</span>
+        <h3>Web design &amp; build</h3>
+        <p>First impressions matter online. I combine clean design with solid frontend code to build sites that look sharp and actually work well — not just on launch day, but as content and traffic grow.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="num">02</span>
+        <h3>Responsive development</h3>
+        <p>With visitors coming from phones, tablets, and desktops, responsive layout isn't optional. Every site I build is tested across screen sizes so it holds up wherever it's viewed.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="num">03</span>
+        <h3>Support &amp; maintenance</h3>
+        <p>Sites need upkeep after launch. I offer ongoing support — bug fixes, updates, and small improvements — to keep things running smoothly long after the initial build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Portfolio</span>
+      <h2>Selected work</h2>
+    </div>
+    <div class="project-list">
+      <div class="project reveal">
+        <img src="images/img1.JPG" alt="E-commerce site">
+        <div><h3>E-commerce site</h3><p>A storefront built with HTML, CSS, and JavaScript, deployed via GitHub Pages.</p></div>
+        <a class="visit" href="https://ojoshegbe.github.io/Limar-site/" target="_blank" rel="noopener">Visit site →</a>
+      </div>
+      <div class="project reveal">
+        <img src="images/img2.JPG" alt="Construction landing page">
+        <div><h3>Construction landing page</h3><p>A landing page for a construction business, designed to present services clearly and drive contact.</p></div>
+        <a class="visit" href="https://ojoshegbe.github.io/contractor/" target="_blank" rel="noopener">Visit site →</a>
+      </div>
+      <div class="project reveal">
+        <img src="images/img3.png" alt="Food store landing page">
+        <div><h3>Food store landing page</h3><p>A landing page for a food store, focused on a simple, appetite-friendly browsing experience.</p></div>
+        <a class="visit" href="https://ojoshegbe.github.io/fellician/" target="_blank" rel="noopener">Visit site →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="contact">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Contact</span>
+      <h2>Let's work together</h2>
+      <p>Have a project in mind, or just want to say hi? Reach out below — messages go straight to my inbox.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <div class="contact-line"><span class="k">EMAIL</span> <a href="mailto:adejoyunusa19@gmail.com">adejoyunusa19@gmail.com</a></div>
+        <div class="contact-line"><span class="k">PHONE</span> <a href="https://wa.me/+2348075139800">+234 807 513 9800</a></div>
+        <div class="contact-line"><span class="k">RESUME</span> <a href="images/cv.me.png" download="download">Download CV (PDF)</a></div>
+      </div>
+      <form id="contact-form" class="reveal">
+        <input type="text" id="from_name" placeholder="Your name" required>
+        <input type="email" id="reply_to" placeholder="Your email" required>
+        <textarea id="message" placeholder="Tell me about your project" required></textarea>
+        <button type="submit" class="submit" id="submit-btn">
+          <span class="label">Send message</span>
+          <span class="check">✓ Message sent</span>
+        </button>
+        <!-- <p class="form-note">Delivered straight to my Gmail via EmailJS — no page reload.</p> -->
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Adejo Yunusa</p>
+    <p>portfolio website contact user for more info</p>
+  </div>
+</footer>
+
+<script>
+  // ---------- Preloader ----------
+  window.addEventListener('load', () => {
+    const pre = document.getElementById('preloader');
+    setTimeout(() => pre.classList.add('hide'), 400);
+  });
+
+  // ---------- Dark / light mode (synced across desktop + mobile toggle) ----------
+  const root = document.documentElement;
+  const toggleBtn = document.getElementById('theme-toggle');
+  const toggleBtnMobile = document.getElementById('theme-toggle-mobile');
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  function setToggleIcons(isDark){
+    const icon = isDark ? '☀️' : '🌙';
+    toggleBtn.textContent = icon;
+    toggleBtnMobile.textContent = icon;
+  }
+
+  if (saved === 'dark' || (!saved && prefersDark)) {
+    root.setAttribute('data-theme', 'dark');
+  }
+  setToggleIcons(root.getAttribute('data-theme') === 'dark');
+
+  function toggleTheme(){
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      root.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+    setToggleIcons(!isDark);
+  }
+  toggleBtn.addEventListener('click', toggleTheme);
+  toggleBtnMobile.addEventListener('click', toggleTheme);
+
+  // ---------- Scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ---------- Active nav highlight (top nav + mobile dock) ----------
+  const navLinks = document.querySelectorAll('header nav a[href^="#"], .mobile-dock a[href^="#"]');
+  const sectionIds = [...new Set([...navLinks].map(a => a.getAttribute('href')))];
+  const sections = sectionIds.map(id => document.querySelector(id));
+  const navIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = `#${entry.target.id}`;
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => s && navIO.observe(s));
+
+  // ---------- Contact form: EmailJS auto-send ----------
+  emailjs.init('N_Ysu-09rQIDKxYmH');
+
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const params = {
+      from_name: document.getElementById('from_name').value,
+      reply_to: document.getElementById('reply_to').value,
+      message: document.getElementById('message').value
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.querySelector('.label').textContent = 'Sending…';
+
+    emailjs.send('service_hpvnn45', 'template_y9zbrlq', params)
+      .then(() => {
+        submitBtn.classList.add('sent');
+        submitBtn.querySelector('.label').style.display = 'none';
+        form.reset();
+        setTimeout(() => {
+          submitBtn.classList.remove('sent');
+          submitBtn.querySelector('.label').style.display = 'inline';
+          submitBtn.querySelector('.label').textContent = 'Send message';
+          submitBtn.disabled = false;
+        }, 3000);
+      })
+      .catch((err) => {
+        submitBtn.querySelector('.label').textContent = 'Send message';
+        submitBtn.disabled = false;
+        alert('Message could not be sent. Please try again or email me directly.');
+        console.error(err);
+      });
+  });
+</script>
+
+</body>
+</html>

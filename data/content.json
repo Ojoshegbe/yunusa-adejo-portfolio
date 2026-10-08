@@ -1,0 +1,80 @@
+{
+  "name": "Adejo Yunusa",
+  "role": "Web Developer & Designer",
+  "headline": "Adejo|Yunusa",
+  "lead": "I design and build interfaces that are fast, responsive, and easy to use. HTML, CSS, JavaScript and React, from concept to a clean site.",
+  "available": "Open to freelance work",
+  "photo": "images/me3.jpg",
+  "cv": "images/cv.me.png",
+  "email": "adejoyunusa19@gmail.com",
+  "phone": "+234 807 513 9800",
+  "footer": "Web developer & designer",
+  "skills": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "React",
+    "Git",
+    "REST APIs",
+    "Node.js",
+    "npm"
+  ],
+  "about": [
+    "I'm a web developer and designer with a focus on clean visual design and smooth user experience. I work with HTML, CSS, JavaScript and React, and I use Git for version control and REST APIs to connect interfaces to real data.",
+    "I care about the details that make a site feel considered: consistent spacing, sensible interactions, and layouts that hold up on any screen size. I keep learning so the sites I build don't feel dated in a year.",
+    "I'm comfortable working directly with clients on scope and feedback."
+  ],
+  "timeline": [
+    {
+      "title": "Freelance Developer & Designer, Fiverr, Upwork & others",
+      "meta": "2023 to present"
+    },
+    {
+      "title": "Web Developer Intern, Zealarex Technology",
+      "meta": "2023"
+    },
+    {
+      "title": "Frontend Development Training, Zealarex Technology",
+      "meta": "2022"
+    },
+    {
+      "title": "Ikorodu High School",
+      "meta": "2022"
+    }
+  ],
+  "services": [
+    {
+      "title": "Web design & build",
+      "text": "Clean design with solid frontend code, so your site looks sharp and keeps working as content and traffic grow."
+    },
+    {
+      "title": "Responsive development",
+      "text": "Every site is tested across phones, tablets and desktops so it holds up wherever it's viewed."
+    },
+    {
+      "title": "Support & maintenance",
+      "text": "Bug fixes, updates and small improvements after launch, so things keep running smoothly."
+    }
+  ],
+  "projects": [
+    {
+      "title": "E-commerce site",
+      "desc": "A storefront built with HTML, CSS and JavaScript, deployed via GitHub Pages.",
+      "url": "https://ojoshegbe.github.io/Limar-site/",
+      "img": "images/img1.JPG"
+    },
+    {
+      "title": "Construction landing page",
+      "desc": "A landing page for a construction business, built to present services clearly and drive contact.",
+      "url": "https://ojoshegbe.github.io/contractor/",
+      "img": "images/img2.JPG"
+    },
+    {
+      "title": "Food store landing page",
+      "desc": "A landing page for a food store, focused on a simple, appetite-friendly browsing experience.",
+      "url": "https://ojoshegbe.github.io/fellician/",
+      "img": "images/img3.png"
+    }
+  ]
+}
+

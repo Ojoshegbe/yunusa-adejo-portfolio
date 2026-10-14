@@ -2,206 +2,307 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Adejo Yunusa — Web Developer & Designer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adejo Yunusa — Web Developer &amp; Designer</title>
 <meta name="description" content="Adejo Yunusa builds fast, responsive websites with HTML, CSS, JavaScript and React.">
+<script>
+/* apply saved theme before paint (no flash) and start content fetch immediately */
+(function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark')})();
+window.__c=fetch('/data/content.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error('data/content.json returned '+r.status+' (file not found on the server)');return r.json()});
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- icons load without blocking first paint -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" media="print" onload="this.media='all'" crossorigin="anonymous" referrerpolicy="no-referrer">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
-<script>
-/* Start fetching content immediately, in parallel with scripts */
-window.__c = fetch('data/content.json',{cache:'no-cache'}).then(r=>r.json());
-</script>
 <style>
-:root{--bg:#ECEEF3;--ink:#0D1B3A;--mute:#4D5873;--navy:#0D1B3A;--y:#FFD60A;--line:#C9CEDB;--r:6px}
+:root{--bg:#FBFAF7;--panel:#FFFFFF;--ink:#181B20;--muted:#5B6169;--line:#E7E4DC;--accent:#2452FF;--accent2:#7C3AED;--accent-ink:#0E2FB0;--amber:#FFB020;--radius:16px;--shadow:0 8px 30px rgba(20,20,30,0.06)}
+html[data-theme="dark"]{--bg:#0B0D12;--panel:#12151C;--ink:#F3F3F1;--muted:#9BA1AC;--line:#232732;--accent:#5B7FFF;--accent2:#A78BFA;--accent-ink:#8FA8FF;--amber:#FFC44D;--shadow:0 8px 30px rgba(0,0,0,0.35)}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{background:var(--bg);color:var(--ink);font:400 17px/1.6 'Instrument Sans',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-weight:800;line-height:1;letter-spacing:-.03em}
-a{color:inherit}img{max-width:100%;display:block}
-:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.w{max-width:1120px;margin:0 auto;padding:0 24px}
-section{padding:110px 0}
-h2{font-size:clamp(34px,6vw,68px);margin-bottom:48px}
-#bar{position:fixed;top:0;left:0;height:4px;width:100%;background:var(--y);transform:scaleX(0);transform-origin:0 50%;z-index:99}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .35s ease,color .35s ease;overflow-x:hidden}
+h1,h2,h3{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-0.01em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-ink);display:inline-flex;align-items:center;gap:8px}
+.eyebrow::before{content:"◆";font-size:9px;color:var(--amber)}
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:0 50%;z-index:1000}
  
-header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
-.nav{display:flex;justify-content:space-between;align-items:center;height:60px;gap:20px}
-.logo{font:800 20px 'Bricolage Grotesque',sans-serif;text-decoration:none;letter-spacing:-.03em}
-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
-nav a{padding:8px 12px;text-decoration:none;font-weight:600;font-size:15px;border-radius:var(--r);white-space:nowrap}
-nav a:hover{background:var(--line)}
-nav a.on{background:var(--ink);color:#fff}
-@media(max-width:560px){.nav{height:auto;flex-direction:column;align-items:flex-start;gap:2px;padding-top:10px}nav{max-width:100%;padding-bottom:8px}}
+#preloader{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .4s ease,visibility .4s ease}
+#preloader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-mark{font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:.08em;color:var(--muted)}
+.loader-bar{width:160px;height:3px;border-radius:99px;background:var(--line);overflow:hidden;position:relative}
+.loader-bar::after{content:"";position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:loadSweep 1s ease-in-out infinite;border-radius:99px}
+@keyframes loadSweep{0%{left:-40%}100%{left:100%}}
  
-.hero{padding:70px 0 90px}
-.hero .w{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:end}
-.hero h1{font-size:clamp(54px,12vw,168px);line-height:.88;margin-bottom:28px}
-.ln{display:block;overflow:hidden;padding-bottom:.08em}.ln i{display:block;font-style:normal}
-.hero p{max-width:480px;color:var(--mute);font-size:19px;margin-bottom:30px}
-.btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-block;padding:14px 26px;font-weight:600;text-decoration:none;border:2px solid var(--ink);border-radius:var(--r);background:none;font:600 16px 'Instrument Sans',sans-serif;cursor:pointer;transition:transform .15s,background .15s}
-.btn.f{background:var(--ink);color:#fff}.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--y)}
-.pic{position:relative;margin-bottom:10px}
-.pic::before{content:"";position:absolute;inset:18px -18px -18px 18px;background:var(--y);border-radius:var(--r)}
-.pic img{position:relative;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r)}
-.pic span{position:absolute;z-index:2;left:-10px;bottom:20px;background:var(--ink);color:#fff;padding:8px 14px;font-size:14px;font-weight:600;border-radius:var(--r)}
-@media(max-width:820px){.hero .w{grid-template-columns:1fr}.pic{max-width:340px;margin:0 18px 18px 0}}
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:15px}
+.logo span{color:var(--accent)}
+header nav{display:flex;align-items:center;gap:6px}
+nav ul{list-style:none;display:flex;gap:2px}
+nav a{font-family:'IBM Plex Mono',monospace;font-size:13px;padding:10px 16px;color:var(--muted);border-bottom:2px solid transparent;transition:.15s}
+nav a:hover{color:var(--ink);border-color:var(--line)}
+nav a.active{color:var(--ink);border-color:var(--accent)}
+#theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--panel);display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:10px;font-size:16px;transition:.2s}
+#theme-toggle:hover{border-color:var(--accent);transform:rotate(15deg)}
+@media(max-width:760px){.nav-inner nav>ul{display:none}}
  
-.tick{background:var(--y);overflow:hidden;white-space:nowrap;padding:18px 0;border-block:2px solid var(--ink)}
-.tick div{display:inline-flex;gap:44px;animation:t 28s linear infinite;font:800 28px 'Bricolage Grotesque',sans-serif;letter-spacing:-.02em;padding-right:44px}
-@keyframes t{to{transform:translateX(-50%)}}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:transform .18s cubic-bezier(.34,1.56,.64,1),background .18s,box-shadow .18s}
+.btn:hover{transform:translateY(-2px) scale(1.04)}
+.btn:active{transform:scale(0.94)}
+.btn-primary{background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;box-shadow:var(--shadow)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--accent)}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
  
-.ab{display:grid;grid-template-columns:1.1fr 1fr;gap:64px}
-.ab p{margin-bottom:18px;color:var(--mute)}
-.ab p:first-child{font-size:22px;color:var(--ink);line-height:1.45}
-.tl{border-left:3px solid var(--ink);padding-left:26px;display:grid;gap:26px;align-self:start}
-.tl div{position:relative}.tl div::before{content:"";position:absolute;left:-35px;top:7px;width:13px;height:13px;background:var(--y);border:3px solid var(--ink);border-radius:50%}
-.tl small{display:block;color:var(--mute);font-size:14px}.tl b{font-size:18px}
-@media(max-width:820px){.ab{grid-template-columns:1fr;gap:44px}}
+.hero{padding:96px 0 80px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,var(--accent) 0%,transparent 70%);opacity:.14;top:-220px;right:-160px;pointer-events:none;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(30px)}}
+.hero-grid{display:grid;grid-template-columns:1.3fr 0.9fr;gap:56px;align-items:center;position:relative}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+.hero h1{font-size:clamp(38px,5.6vw,64px);font-weight:400;margin:16px 0 18px;line-height:1.08}
+.hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:17px;color:var(--muted);max-width:480px;margin-bottom:28px}
+.portrait{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1/1.05;background:var(--panel);box-shadow:var(--shadow)}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait .tag{position:absolute;bottom:14px;left:14px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;display:flex;align-items:center;gap:6px}
+.dot{width:7px;height:7px;border-radius:50%;background:#22C55E;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
  
-.dark{background:var(--navy);color:#fff}
-.dark h2{color:var(--y)}
-.sv{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
-.sv div{border-top:3px solid var(--y);padding-top:20px}
-.sv h3{font-size:28px;margin-bottom:12px}.sv p{color:#B8C2DC}
-@media(max-width:820px){.sv{grid-template-columns:1fr;gap:34px}}
+.scroll{width:100%;background:var(--bg);overflow:hidden;padding:30px 0}
+.scroll-cont{width:100%;height:100px;position:relative}
+.scroll-cont i{width:100px;height:100px;font-size:30px;position:absolute;left:100%;display:flex;align-items:center;justify-content:center;color:var(--accent);animation:scrolleffect 25s linear infinite}
+@keyframes scrolleffect{to{left:-200px}}
  
-.stack{display:grid;gap:34px}
-.pj{position:sticky;top:calc(80px + var(--i)*14px)}
-.card{display:grid;grid-template-columns:1fr 1.2fr;background:#fff;border:2px solid var(--ink);border-radius:10px;overflow:hidden;box-shadow:8px 8px 0 var(--ink);transform-origin:50% 0}
-.card .t{padding:34px;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
-.card h3{font-size:clamp(26px,3.4vw,40px);margin-bottom:12px}.card p{color:var(--mute)}
-.card .im{overflow:hidden;background:var(--line);aspect-ratio:16/10}
-.card img{width:100%;height:112%;object-fit:cover}
-@media(max-width:820px){.pj{position:static}.card{grid-template-columns:1fr}.card .im{order:-1}.card .t{padding:24px}}
+section{padding:88px 0}
+section.alt{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.section-head{margin-bottom:44px;max-width:560px}
+.section-head h2{font-size:clamp(26px,3.4vw,36px);margin-top:10px}
+.section-head p{color:var(--muted);margin-top:12px;font-size:15.5px}
  
-.ct{background:var(--y);border-top:2px solid var(--ink)}
-.cg{display:grid;grid-template-columns:1fr 1fr;gap:56px}
-.ct h2{font-size:clamp(44px,9vw,120px);margin-bottom:34px}
-.ct a.l{display:block;font:800 clamp(18px,2.4vw,26px) 'Bricolage Grotesque',sans-serif;padding:14px 0;border-bottom:2px solid var(--ink);text-decoration:none;overflow-wrap:anywhere}
-.ct a.l:hover{padding-left:12px;transition:padding .15s}
-form{display:grid;gap:14px;align-content:start}
-input,textarea{font:inherit;padding:14px;border:2px solid var(--ink);border-radius:var(--r);background:#fff;width:100%}
-textarea{min-height:140px;resize:vertical}
-form .btn{justify-self:start;min-width:180px}
-@media(max-width:820px){.cg{grid-template-columns:1fr;gap:34px}}
-footer{padding:22px 0;background:var(--ink);color:#B8C2DC;font-size:14px}
-footer .w{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr}}
+.about-grid p{color:var(--muted);margin-bottom:16px;font-size:15.5px}
+.info-row{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.info-row:last-child{border-bottom:none}
+.info-row .k{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);width:110px;flex-shrink:0;padding-top:2px}
+.info-row .v{font-size:14.5px}
+.info-row .v .role{font-weight:600}
+.info-row .v .meta{color:var(--muted);font-size:13.5px}
+.skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+@media(max-width:520px){.skill-grid{grid-template-columns:repeat(2,1fr)}}
+.skill-chip{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:13.5px;font-weight:500;transition:.18s}
+.skill-chip:hover{border-color:var(--accent);transform:translateY(-2px)}
+ 
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:800px){.service-grid{grid-template-columns:1fr}}
+.service-card{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--bg);transition:.2s}
+.service-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:var(--shadow)}
+.service-card .num{font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:13px;margin-bottom:14px;display:block}
+.service-card h3{font-size:18px;margin-bottom:10px}
+.service-card p{color:var(--muted);font-size:14px}
+ 
+.project-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.project{display:grid;grid-template-columns:220px 1fr auto;gap:24px;align-items:center;background:var(--panel);padding:20px 24px;transition:.2s}
+.project:hover{background:var(--bg)}
+@media(max-width:700px){.project{grid-template-columns:1fr;text-align:left}}
+.project img{width:220px;height:130px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+@media(max-width:700px){.project img{width:100%;height:180px}}
+.project h3{font-size:17px;margin-bottom:6px}
+.project p{color:var(--muted);font-size:14px}
+.project .visit{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--accent-ink);white-space:nowrap;border:1px solid var(--line);padding:9px 16px;border-radius:999px;transition:.18s}
+.project .visit:hover{border-color:var(--accent);transform:translateY(-2px)}
+ 
+.contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr}}
+.contact-card{border:1px solid var(--line);border-radius:var(--radius);padding:26px;background:var(--panel)}
+.contact-line{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14.5px;flex-wrap:wrap}
+.contact-line:last-child{border-bottom:none}
+.contact-line .k{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);width:70px;flex-shrink:0}
+form{display:flex;flex-direction:column;gap:14px}
+input,textarea{font-family:'Plus Jakarta Sans',sans-serif;font-size:14.5px;border:1px solid var(--line);border-radius:10px;padding:13px 14px;background:var(--panel);color:var(--ink);width:100%}
+input:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+textarea{min-height:120px;resize:vertical}
+button.submit{align-self:flex-start;min-width:170px;justify-content:center;background:linear-gradient(120deg,var(--accent),var(--accent2));color:#fff;border:none;padding:13px 26px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;transition:transform .18s cubic-bezier(.34,1.56,.64,1);display:inline-flex;align-items:center;gap:8px}
+button.submit:hover{transform:translateY(-2px) scale(1.03)}
+button.submit:active{transform:scale(.95)}
+button.submit:disabled{opacity:.7}
+button.submit.sent{background:linear-gradient(120deg,#22C55E,#16A34A)}
+ 
+footer{padding:28px 0;border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+footer p{font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+ 
+.mobile-dock{display:none;position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow);padding:8px;gap:2px;align-items:center}
+.mobile-dock a{position:relative;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:17px;padding:0;border:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),color .2s}
+.mobile-dock a .dock-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.02em;color:var(--accent);opacity:0;transition:opacity .2s;white-space:nowrap}
+.mobile-dock a.active{color:#fff;background:linear-gradient(120deg,var(--accent),var(--accent2));transform:translateY(-10px) scale(1.08);box-shadow:0 6px 16px rgba(36,82,255,0.35)}
+.mobile-dock a.active .dock-label{opacity:1}
+.mobile-dock a:active{transform:translateY(-4px) scale(0.9)}
+#theme-toggle-mobile{width:44px;height:44px;border-radius:50%;border:none;background:transparent;color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+@media(max-width:760px){.mobile-dock{display:flex}body{padding-bottom:78px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.001ms !important;transition-duration:0.001ms !important}}
 </style>
 </head>
 <body>
 <div id="bar"></div>
-<header><div class="w nav">
-  <a class="logo" href="#home">Adejo Yunusa</a>
-  <nav><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#work">Work</a><a href="#contact">Contact</a></nav>
-</div></header>
+<div id="preloader"><div class="loader-mark">ADEJO.YUNUSA</div><div class="loader-bar"></div></div>
+ 
+<header>
+  <div class="nav-inner">
+    <div class="logo">ADEJO<span>.</span>YUNUSA</div>
+    <nav>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </div>
+</header>
+ 
+<nav class="mobile-dock" aria-label="Mobile navigation">
+  <a href="#home" class="active" aria-label="Home"><i class="fa-solid fa-house"></i><span class="dock-label">Home</span></a>
+  <a href="#about" aria-label="About"><i class="fa-solid fa-user"></i><span class="dock-label">About</span></a>
+  <a href="#services" aria-label="Services"><i class="fa-solid fa-layer-group"></i><span class="dock-label">Services</span></a>
+  <a href="#portfolio" aria-label="Portfolio"><i class="fa-solid fa-briefcase"></i><span class="dock-label">Work</span></a>
+  <a href="#contact" aria-label="Contact"><i class="fa-solid fa-envelope"></i><span class="dock-label">Contact</span></a>
+  <button id="theme-toggle-mobile" aria-label="Toggle dark mode">🌙</button>
+</nav>
  
 <main id="app"></main>
  
 <script>
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ICONS={html:'fa-solid fa-code',css:'fa-brands fa-css',javascript:'fa-brands fa-square-js',react:'fa-brands fa-react',git:'fa-brands fa-git-alt',github:'fa-brands fa-github','node.js':'fa-brands fa-node',npm:'fa-brands fa-npm',sass:'fa-brands fa-sass',vue:'fa-brands fa-vuejs',angular:'fa-brands fa-angular'};
+const TICKER=['fa-solid fa-code','fa-brands fa-sass','fa-brands fa-css','fa-brands fa-react','fa-brands fa-square-js','fa-brands fa-node','fa-brands fa-vuejs','fa-brands fa-npm','fa-brands fa-angular','fa-brands fa-git-alt','fa-brands fa-github','fa-solid fa-code-compare','fa-brands fa-git','fa-brands fa-visual-studio','fa-brands fa-dev','fa-solid fa-reply'];
  
 function render(d){
-  const lines=(d.headline||d.name).split('|');
-  const skills=(d.skills||[]).map(esc);
-  const tick=skills.concat(skills).map(s=>`<span>${s}</span>`).join('');
+  const head=esc(d.headline||d.name).replace(/\*(.+?)\*/g,'<em>$1</em>');
+  const n=TICKER.length;
   document.title=`${d.name} — ${d.role}`;
   document.getElementById('app').innerHTML=`
-  <section class="hero" id="home"><div class="w">
-    <div>
-      <h1>${lines.map(l=>`<span class="ln"><i>${esc(l.trim())}</i></span>`).join('')}</h1>
-      <p class="hl">${esc(d.lead)}</p>
-      <div class="btns hl"><a class="btn f" href="#work">See my work</a>${d.cv?`<a class="btn" href="${esc(d.cv)}" download>Download CV</a>`:''}</div>
+  <section class="hero" id="home"><div class="glow"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">${esc(d.role)}</span>
+        <h1>${head}</h1>
+        <p class="lead">${esc(d.lead)}</p>
+        <div class="btn-row"><a href="#portfolio" class="btn btn-primary">View my work</a>${d.cv?`<a href="${esc(d.cv)}" class="btn btn-ghost" download>Download CV</a>`:''}</div>
+      </div>
+      <div class="portrait"><img src="${esc(d.photo)}" alt="${esc(d.name)}" fetchpriority="high">${d.available?`<div class="tag"><span class="dot"></span> ${esc(d.available)}</div>`:''}</div>
     </div>
-    <div class="pic hl"><img src="${esc(d.photo)}" alt="${esc(d.name)}" fetchpriority="high">${d.available?`<span>${esc(d.available)}</span>`:''}</div>
+  </section>
+  <section class="scroll" aria-hidden="true"><div class="scroll-cont">${TICKER.map((c,i)=>`<i class="${c}" style="animation-delay:calc(25s / ${n} * ${n-i-1} * -1)"></i>`).join('')}</div></section>
+  <section id="about"><div class="wrap">
+    <div class="section-head"><span class="eyebrow">About</span><h2>A bit about how I work</h2></div>
+    <div class="about-grid">
+      <div>${(d.about||[]).map(p=>`<p>${esc(p)}</p>`).join('')}
+        <div class="skill-grid">${(d.skills||[]).map(s=>`<div class="skill-chip">${ICONS[s.toLowerCase()]?`<i class="${ICONS[s.toLowerCase()]}"></i>`:''}${esc(s)}</div>`).join('')}</div>
+      </div>
+      <div>${(d.timeline||[]).map(t=>`<div class="info-row"><div class="k">${esc(t.label||'')}</div><div class="v"><div class="role">${esc(t.title)}</div><div class="meta">${esc(t.meta)}</div></div></div>`).join('')}</div>
+    </div>
   </div></section>
-  <div class="tick" aria-hidden="true"><div>${tick}</div></div>
-  <section id="about"><div class="w">
-    <h2 class="rv">About</h2>
-    <div class="ab"><div class="rv">${(d.about||[]).map(p=>`<p>${esc(p)}</p>`).join('')}</div>
-    <div class="tl">${(d.timeline||[]).map(t=>`<div class="rv"><b>${esc(t.title)}</b><small>${esc(t.meta)}</small></div>`).join('')}</div></div>
+  <section class="alt" id="services"><div class="wrap">
+    <div class="section-head"><span class="eyebrow">Services</span><h2>What I can help with</h2></div>
+    <div class="service-grid">${(d.services||[]).map((s,i)=>`<div class="service-card"><span class="num">${String(i+1).padStart(2,'0')}</span><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join('')}</div>
   </div></section>
-  <section class="dark" id="services"><div class="w">
-    <h2 class="rv">What I do</h2>
-    <div class="sv">${(d.services||[]).map(s=>`<div class="rv"><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join('')}</div>
+  <section id="portfolio"><div class="wrap">
+    <div class="section-head"><span class="eyebrow">Portfolio</span><h2>Selected work</h2></div>
+    <div class="project-list">${(d.projects||[]).map(p=>`<div class="project"><img src="${esc(p.img)}" alt="${esc(p.title)}" loading="lazy" decoding="async"><div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div><a class="visit" href="${esc(p.url)}" target="_blank" rel="noopener">Visit site →</a></div>`).join('')}</div>
   </div></section>
-  <section id="work"><div class="w">
-    <h2 class="rv">Selected work</h2>
-    <div class="stack">${(d.projects||[]).map((p,i)=>`<div class="pj" style="--i:${i}"><article class="card">
-      <div class="t"><div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div><div><a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener">Visit site</a></div></div>
-      <div class="im"><img src="${esc(p.img)}" alt="${esc(p.title)}" loading="lazy" decoding="async"></div>
-    </article></div>`).join('')}</div>
-  </div></section>
-  <section class="ct" id="contact"><div class="w">
-    <h2 class="rv">Let's build something.</h2>
-    <div class="cg">
-      <div class="rv"><a class="l" href="mailto:${esc(d.email)}">${esc(d.email)}</a><a class="l" href="https://wa.me/${esc(d.phone.replace(/\D/g,''))}">${esc(d.phone)}</a>${d.cv?`<a class="l" href="${esc(d.cv)}" download>Download my CV</a>`:''}</div>
-      <form id="cf" class="rv">
-        <input id="n" placeholder="Your name" aria-label="Your name" required>
-        <input id="e" type="email" placeholder="Your email" aria-label="Your email" required>
-        <textarea id="m" placeholder="Tell me about your project" aria-label="Message" required></textarea>
-        <button class="btn f" id="sb">Send message</button>
+  <section class="alt" id="contact"><div class="wrap">
+    <div class="section-head"><span class="eyebrow">Contact</span><h2>Let's work together</h2><p>Have a project in mind, or just want to say hi? Reach out below — messages go straight to my inbox.</p></div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-line"><span class="k">EMAIL</span> <a href="mailto:${esc(d.email)}">${esc(d.email)}</a></div>
+        <div class="contact-line"><span class="k">PHONE</span> <a href="https://wa.me/${esc(String(d.phone).replace(/\D/g,''))}">${esc(d.phone)}</a></div>
+        ${d.cv?`<div class="contact-line"><span class="k">RESUME</span> <a href="${esc(d.cv)}" download>Download CV</a></div>`:''}
+      </div>
+      <form id="contact-form">
+        <input type="text" id="from_name" placeholder="Your name" aria-label="Your name" required>
+        <input type="email" id="reply_to" placeholder="Your email" aria-label="Your email" required>
+        <textarea id="message" placeholder="Tell me about your project" aria-label="Message" required></textarea>
+        <button type="submit" class="submit" id="submit-btn">Send message</button>
       </form>
     </div>
   </div></section>
-  <footer><div class="w"><span>© ${new Date().getFullYear()} ${esc(d.name)}</span><span>${esc(d.footer||'')}</span></div></footer>`;
+  <footer><div class="wrap"><p>© ${new Date().getFullYear()} ${esc(d.name)}</p><p>${esc(d.footer||'')}</p></div></footer>`;
 }
  
-function motion(){
-  const g=window.gsap,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if(!g||!window.ScrollTrigger||reduce)return;
-  g.registerPlugin(ScrollTrigger);
-  // 1. The one page-load moment: headline lines slide up out of a mask
-  g.from('.ln i',{yPercent:110,duration:.9,stagger:.12,ease:'power4.out'});
-  g.from('.hl',{y:30,opacity:0,duration:.8,delay:.45,stagger:.1,ease:'power2.out'});
-  // 2. Progress bar tied to scroll
-  g.to('#bar',{scaleX:1,ease:'none',scrollTrigger:{scrub:.2,start:0,end:'max'}});
-  // 3. Section content reveals
-  g.utils.toArray('.rv').forEach(el=>g.from(el,{y:36,opacity:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
-  // 4. Skills ticker speeds up with scroll velocity
-  const tk=document.querySelector('.tick div');
-  ScrollTrigger.create({onUpdate:s=>{const v=Math.min(Math.abs(s.getVelocity())/400,6);tk.style.animationDuration=(28/(1+v))+'s'}});
-  // 5. Project cards: stack on scroll, earlier cards recede, images drift
-  const mm=g.matchMedia();
-  mm.add('(min-width:821px)',()=>{
-    const cards=g.utils.toArray('.pj');
-    cards.forEach((c,i)=>{
-      const n=cards[i+1];
-      if(n)g.to(c.firstElementChild,{scale:.93,opacity:.55,ease:'none',scrollTrigger:{trigger:n,start:'top 85%',end:'top 25%',scrub:true}});
-      g.fromTo(c.querySelector('img'),{yPercent:-8},{yPercent:0,ease:'none',scrollTrigger:{trigger:c,start:'top bottom',end:'bottom top',scrub:true}});
-    });
+/* theme (synced desktop + mobile) */
+function theme(){
+  const root=document.documentElement,btns=['theme-toggle','theme-toggle-mobile'].map(i=>document.getElementById(i));
+  const icons=()=>btns.forEach(b=>b.textContent=root.dataset.theme==='dark'?'☀️':'🌙');
+  icons();
+  btns.forEach(b=>b.onclick=()=>{
+    const dark=root.dataset.theme==='dark';
+    dark?root.removeAttribute('data-theme'):root.setAttribute('data-theme','dark');
+    try{localStorage.setItem('theme',dark?'light':'dark')}catch(e){}
+    icons();
   });
 }
  
 function nav(){
-  const links=[...document.querySelectorAll('nav a')];
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('on',l.hash==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
-  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+  const links=[...document.querySelectorAll('header nav a[href^="#"],.mobile-dock a[href^="#"]')];
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id))}),{threshold:.5});
+  document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));
+}
+ 
+/* scroll-triggered animation (GSAP ScrollTrigger). Content stays visible if it fails to load. */
+function motion(){
+  const g=window.gsap;
+  if(!g||!window.ScrollTrigger||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  g.registerPlugin(ScrollTrigger);
+  // page-load sequence
+  g.from('.hero .eyebrow,.hero h1,.hero .lead,.hero .btn-row',{y:30,opacity:0,duration:.8,stagger:.12,ease:'power3.out',delay:.15});
+  g.from('.portrait',{clipPath:'inset(0 0 100% 0)',duration:1,ease:'power3.out',delay:.2});
+  // scroll progress
+  g.to('#bar',{scaleX:1,ease:'none',scrollTrigger:{scrub:.2,start:0,end:'max'}});
+  // section headings
+  g.utils.toArray('.section-head').forEach(el=>g.from(el,{y:34,opacity:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}}));
+  // grouped items rise in as each group enters
+  const rise='.about-grid>div:first-child>p,.skill-chip,.info-row,.service-card,.contact-card,#contact-form';
+  g.set(rise,{y:30,opacity:0});
+  ScrollTrigger.batch(rise,{start:'top 90%',once:true,onEnter:b=>g.to(b,{y:0,opacity:1,duration:.6,stagger:.08,ease:'power2.out',clearProps:'transform,opacity'})});
+  // project rows: image wipes in and drifts, text slides
+  g.utils.toArray('.project').forEach(row=>{
+    const img=row.querySelector('img');
+    g.fromTo(img,{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0% 0 0)',ease:'none',scrollTrigger:{trigger:row,start:'top 92%',end:'top 55%',scrub:true},onComplete(){img.style.clipPath='none'}});
+    g.from(row.children[1],{x:-30,opacity:0,duration:.7,ease:'power2.out',scrollTrigger:{trigger:row,start:'top 85%',once:true}});
+  });
 }
  
 function form(){
-  const f=document.getElementById('cf'),b=document.getElementById('sb');
-  if(!f)return;
+  const f=document.getElementById('contact-form'),b=document.getElementById('submit-btn');
   f.addEventListener('submit',e=>{
     e.preventDefault();
     if(!window.emailjs){alert('The form is still loading. Try again in a moment, or email me directly.');return}
     emailjs.init('N_Ysu-09rQIDKxYmH');
     b.disabled=true;b.textContent='Sending…';
-    emailjs.send('service_hpvnn45','template_y9zbrlq',{from_name:n.value,reply_to:e.target.e.value,message:m.value})
-      .then(()=>{b.textContent='Message sent';f.reset();setTimeout(()=>{b.textContent='Send message';b.disabled=false},3000)})
-      .catch(()=>{b.textContent='Send message';b.disabled=false;alert('Message could not be sent. Please try again or email me directly.')});
+    emailjs.send('service_hpvnn45','template_y9zbrlq',{from_name:from_name.value,reply_to:reply_to.value,message:message.value})
+      .then(()=>{b.classList.add('sent');b.textContent='✓ Message sent';f.reset();setTimeout(()=>{b.classList.remove('sent');b.textContent='Send message';b.disabled=false},3000)})
+      .catch(err=>{b.textContent='Send message';b.disabled=false;alert('Message could not be sent. Please try again or email me directly.');console.error(err)});
   });
 }
  
+const pre=()=>document.getElementById('preloader').classList.add('hide');
 window.__c.then(d=>{
-  const go=()=>{render(d);nav();form();motion()};
+  const go=()=>{render(d);theme();nav();form();pre();motion()};
   document.readyState==='loading'?addEventListener('DOMContentLoaded',go):go();
-}).catch(()=>{document.getElementById('app').innerHTML='<section><div class="w"><h2>Content could not load.</h2><p>If you opened this file directly, run it from a local server or GitHub Pages so data/content.json can be read.</p></div></section>'});
+}).catch(err=>{
+  document.getElementById('app').innerHTML='<section><div class="wrap"><h2>Content could not load.</h2><p>Reason: '+esc(err.message)+'</p></div></section>';
+  pre();console.error(err);
+});
+setTimeout(pre,4000);
 </script>
 </body>
 </html>

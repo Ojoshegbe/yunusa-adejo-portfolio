@@ -1,14 +1,30 @@
+
+
+Index · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Adejo Yunusa — Web Developer &amp; Designer</title>
 <meta name="description" content="Adejo Yunusa builds fast, responsive websites with HTML, CSS, JavaScript and React.">
+<script src="config.js"></script>
 <script>
 /* apply saved theme before paint (no flash) and start content fetch immediately */
 (function(){var s=localStorage.getItem('theme');if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.setAttribute('data-theme','dark')})();
-window.__c=fetch('/data/content.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error('data/content.json returned '+r.status+' (file not found on the server)');return r.json()});
+window.__c=(async()=>{
+  const C=window.CFG||{};
+  if(C.url&&C.key&&!/YOUR-/.test(C.url+C.key)){
+    try{
+      const r=await fetch(C.url+'/rest/v1/site_content?id=eq.1&select=data',{headers:{apikey:C.key,Authorization:'Bearer '+C.key}});
+      if(r.ok){const rows=await r.json();if(rows[0]&&rows[0].data)return rows[0].data}
+      console.warn('Supabase returned no content; using data/content.json');
+    }catch(e){console.warn('Supabase unreachable; using data/content.json',e)}
+  }
+  const r=await fetch('/data/content.json',{cache:'no-cache'});
+  if(!r.ok)throw new Error('No content found. Supabase has no data and data/content.json returned '+r.status);
+  return r.json();
+})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +38,7 @@ window.__c=fetch('/data/content.json',{cache:'no-cache'}).then(r=>{if(!r.ok)thro
 :root{--bg:#FBFAF7;--panel:#FFFFFF;--ink:#181B20;--muted:#5B6169;--line:#E7E4DC;--accent:#2452FF;--accent2:#7C3AED;--accent-ink:#0E2FB0;--amber:#FFB020;--radius:16px;--shadow:0 8px 30px rgba(20,20,30,0.06)}
 html[data-theme="dark"]{--bg:#0B0D12;--panel:#12151C;--ink:#F3F3F1;--muted:#9BA1AC;--line:#232732;--accent:#5B7FFF;--accent2:#A78BFA;--accent-ink:#8FA8FF;--amber:#FFC44D;--shadow:0 8px 30px rgba(0,0,0,0.35)}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .35s ease,color .35s ease;overflow-x:hidden}
 h1,h2,h3{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-0.01em}
 a{color:inherit;text-decoration:none}
@@ -138,14 +154,20 @@ footer{padding:28px 0;border-top:1px solid var(--line)}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
 footer p{font-size:13px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
  
-.mobile-dock{display:none;position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:60;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow);padding:8px;gap:2px;align-items:center}
-.mobile-dock a{position:relative;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:17px;padding:0;border:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),color .2s}
-.mobile-dock a .dock-label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.02em;color:var(--accent);opacity:0;transition:opacity .2s;white-space:nowrap}
-.mobile-dock a.active{color:#fff;background:linear-gradient(120deg,var(--accent),var(--accent2));transform:translateY(-10px) scale(1.08);box-shadow:0 6px 16px rgba(36,82,255,0.35)}
+.mobile-dock{display:none;position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:100;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow);padding:8px;gap:2px;align-items:center}
+.mobile-dock a,.mobile-dock button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none;cursor:pointer}
+.mobile-dock a{position:relative;width:48px;height:48px;border:none;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:17px;transition:transform .25s cubic-bezier(.34,1.56,.64,1),color .2s,box-shadow .2s}
+.mobile-dock a .dock-label{position:absolute;bottom:-17px;left:50%;transform:translateX(-50%);font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.02em;color:var(--accent);opacity:0;transition:opacity .2s;white-space:nowrap;pointer-events:none}
+.mobile-dock a i{pointer-events:none}
+.mobile-dock a.active{color:#fff;background:linear-gradient(120deg,var(--accent),var(--accent2));transform:translateY(-10px) scale(1.08);box-shadow:0 6px 16px color-mix(in srgb,var(--accent) 45%,transparent)}
 .mobile-dock a.active .dock-label{opacity:1}
-.mobile-dock a:active{transform:translateY(-4px) scale(0.9)}
-#theme-toggle-mobile{width:44px;height:44px;border-radius:50%;border:none;background:transparent;color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-@media(max-width:760px){.mobile-dock{display:flex}body{padding-bottom:78px}}
+#theme-toggle-mobile{width:46px;height:46px;border-radius:50%;border:none;background:transparent;color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center}
+/* glow: held while a finger is down, plus a pulse on every touch */
+.mobile-dock a:active,#theme-toggle-mobile:active{transform:translateY(-4px) scale(.92);color:var(--accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 30%,transparent),0 0 24px 6px color-mix(in srgb,var(--accent) 55%,transparent)}
+.mobile-dock a.active:active{color:#fff}
+.mobile-dock .glow-tap{animation:dockGlow .7s ease-out}
+@keyframes dockGlow{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 80%,transparent),0 0 26px 8px color-mix(in srgb,var(--accent) 70%,transparent)}100%{box-shadow:0 0 0 18px transparent,0 0 0 0 transparent}}
+@media(max-width:760px){.mobile-dock{display:flex}body{padding-bottom:calc(90px + env(safe-area-inset-bottom))}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:0.001ms !important;transition-duration:0.001ms !important}}
 </style>
 </head>
@@ -251,10 +273,28 @@ function theme(){
   });
 }
  
-function nav(){
+function dock(){
   const links=[...document.querySelectorAll('header nav a[href^="#"],.mobile-dock a[href^="#"]')];
-  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id))}),{threshold:.5});
+  const set=id=>links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')===id));
+  let lock=0;
+  // highlights whichever section crosses the middle of the screen (works for tall sections too)
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&Date.now()>lock)set('#'+e.target.id)}),{rootMargin:'-45% 0px -50% 0px'});
   document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));
+  // glow on every touch
+  const glow=el=>{el.classList.remove('glow-tap');void el.offsetWidth;el.classList.add('glow-tap');if(navigator.vibrate)navigator.vibrate(8)};
+  document.querySelectorAll('.mobile-dock a,.mobile-dock button').forEach(el=>{
+    el.addEventListener('pointerdown',()=>glow(el));
+    el.addEventListener('animationend',()=>el.classList.remove('glow-tap'));
+  });
+  // tap = instant highlight + smooth scroll
+  document.querySelectorAll('.mobile-dock a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href'),t=document.querySelector(id);
+    if(!t)return;
+    e.preventDefault();
+    set(id);lock=Date.now()+1200;
+    t.scrollIntoView({behavior:'smooth',block:'start'});
+    history.replaceState(null,'',id);
+  }));
 }
  
 /* scroll-triggered animation (GSAP ScrollTrigger). Content stays visible if it fails to load. */
@@ -262,6 +302,7 @@ function motion(){
   const g=window.gsap;
   if(!g||!window.ScrollTrigger||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
   g.registerPlugin(ScrollTrigger);
+  addEventListener('load',()=>ScrollTrigger.refresh());
   // page-load sequence
   g.from('.hero .eyebrow,.hero h1,.hero .lead,.hero .btn-row',{y:30,opacity:0,duration:.8,stagger:.12,ease:'power3.out',delay:.15});
   g.from('.portrait',{clipPath:'inset(0 0 100% 0)',duration:1,ease:'power3.out',delay:.2});
@@ -288,7 +329,7 @@ function form(){
     if(!window.emailjs){alert('The form is still loading. Try again in a moment, or email me directly.');return}
     emailjs.init('N_Ysu-09rQIDKxYmH');
     b.disabled=true;b.textContent='Sending…';
-    emailjs.send('service_hpvnn45','template_y9zbrlq',{from_name:from_name.value,reply_to:reply_to.value,message:message.value})
+    emailjs.send('service_hpvnn45','template_y9zbrlq',{from_name:document.getElementById('from_name').value,reply_to:document.getElementById('reply_to').value,message:document.getElementById('message').value})
       .then(()=>{b.classList.add('sent');b.textContent='✓ Message sent';f.reset();setTimeout(()=>{b.classList.remove('sent');b.textContent='Send message';b.disabled=false},3000)})
       .catch(err=>{b.textContent='Send message';b.disabled=false;alert('Message could not be sent. Please try again or email me directly.');console.error(err)});
   });
@@ -296,7 +337,7 @@ function form(){
  
 const pre=()=>document.getElementById('preloader').classList.add('hide');
 window.__c.then(d=>{
-  const go=()=>{render(d);theme();nav();form();pre();motion()};
+  const go=()=>{render(d);theme();dock();form();pre();motion()};
   document.readyState==='loading'?addEventListener('DOMContentLoaded',go):go();
 }).catch(err=>{
   document.getElementById('app').innerHTML='<section><div class="wrap"><h2>Content could not load.</h2><p>Reason: '+esc(err.message)+'</p></div></section>';
@@ -306,3 +347,4 @@ setTimeout(pre,4000);
 </script>
 </body>
 </html>
+ 
